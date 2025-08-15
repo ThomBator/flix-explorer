@@ -1,11 +1,13 @@
-import Home from "./components/Home";
-import Nav from "./components/Nav";
-function App() {
+import HeaderMenu from "./components/HeaderMenu/HeaderMenu";
+import Home from "./components/Home/Home";
+import Footer from "./components/Footer/Footer"
 
+function App() {
   return (
     <>
-    <Nav/>
-    <Home/>
+      <HeaderMenu />
+      <Home />
+      <Footer/>
     </>
   );
 }

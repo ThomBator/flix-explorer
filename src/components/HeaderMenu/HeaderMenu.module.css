@@ -1,0 +1,82 @@
+.header {
+  height: 4rem;
+  margin-top: 1rem;
+  background-color: var(--mantine-color-body);
+  border-bottom: 1px solid
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+}
+
+.inner {
+  height: 4rem;
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  display: block;
+  line-height: 1;
+  padding: 8px 12px;
+  border-radius: var(--mantine-radius-sm);
+  text-decoration: none;
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+
+  @mixin hover {
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-6)
+    );
+  }
+}
+
+.linkLabel {
+  margin-right: 5px;
+}
+
+.header {
+  position: relative;
+  z-index: 10;
+}
+
+.inner {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.link {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--mantine-color-text);
+  border-radius: var(--mantine-radius-sm);
+}
+
+.link:hover {
+  background: var(--mantine-color-default-hover);
+}
+
+.linkLabel {
+  margin-right: 6px;
+}
+
+/* Mobile drawer styling */
+.mobileControl {
+  font-weight: 600;
+}
+
+.mobilePanel {
+  display: grid;
+  gap: 6px;
+  padding-block: 6px;
+}
+
+.mobileLink,
+.mobileTopLink {
+  display: block;
+  padding: 8px 4px;
+  text-decoration: none;
+  color: var(--mantine-color-text);
+}
