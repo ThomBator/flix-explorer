@@ -1,13 +1,20 @@
 import HeaderMenu from "./components/HeaderMenu/HeaderMenu";
 import Home from "./components/Home/Home";
-import Footer from "./components/Footer/Footer"
+import SearchResultsPage from "./components/SearchResultsPage/SearchResultsPage";
+import CategoryResultsPage from "./components/CategoryResultsPage/CategoryResultsPage";
+import Footer from "./components/Footer/Footer";
+import { Routes, Route } from "react-router";
 
 function App() {
   return (
     <>
       <HeaderMenu />
-      <Home />
-      <Footer/>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/search" element={<SearchResultsPage />} />
+        <Route path="/category/:name" element={<CategoryResultsPage />} />
+      </Routes>
+      <Footer />
     </>
   );
 }

@@ -1,12 +1,6 @@
 import { usePopular } from "../../hooks/usePopular";
 import { useTrending } from "../../hooks/useTrending";
-import {
-  Container,
-  TextInput,
-  Title,
-  Text,
-  Button,
-} from "@mantine/core";
+import { Container, TextInput, Title, Text, Button } from "@mantine/core";
 import styles from "./Home.module.css";
 import CategoryCarousel from "../CategoryCarousel/CategoryCarousel";
 
@@ -31,6 +25,10 @@ function Home() {
     return <p>Error, contact site admin.</p>;
   }
 
+  //Made a simple fallabck in case the backdrop image is not available
+  const bgURL = popularData[0]?.backdrop_path
+    ? BASE_URL + popularData[0].backdrop_path
+    : "src/assets/fallbackBG.png";
 
   return (
     <>
@@ -43,7 +41,7 @@ function Home() {
         rgba(39, 55, 69, 0.6) 40%,
         rgba(39, 55, 69, 0.3) 70%,
         rgba(39, 55, 69, 0.2) 100%
-      ),url(${BASE_URL + popularData[0].backdrop_path})`,
+      ),url(${bgURL})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "50% 35%",
@@ -64,8 +62,8 @@ function Home() {
           </Button>
         </Container>
       </header>
-      <CategoryCarousel title="Popular" categoryData={popularData} />
-       <CategoryCarousel title="Trending" categoryData={trendingData} />
+     {popularData &&  <CategoryCarousel title="Popular" categoryData={popularData} />}
+     { trendingData && <CategoryCarousel title="Trending" categoryData={trendingData} /> }
     </>
   );
 }

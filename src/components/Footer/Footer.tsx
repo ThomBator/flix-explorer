@@ -27,7 +27,7 @@ export default function Footer() {
   return (
     <div className={classes.footer}>
       <div className={classes.inner}>
-        <Image   p={0} w={{ base: 100, sm:150,  }} src="src/assets/FlixExplorerLogo.png"/>
+        <Image   alt="Flix Explorer logo"  p={0} w={{ base: 100, sm:150,  }} src="src/assets/FlixExplorerLogo.png"/>
         <Group className={classes.links}>{items}</Group>
 
         <Group gap="xs" justify="flex-end" wrap="nowrap"></Group>

@@ -9,13 +9,14 @@ import {
   Accordion,
   Image,
 } from "@mantine/core";
+import { Link } from "react-router";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./HeaderMenu.module.css";
 
 const links = [
   { link: "/", label: "Home" },
-  { link: "/popular", label: "Popular" },
-  { link: "/trending", label: "Trending" },
+  { link: "/category/popular", label: "Popular" },
+  { link: "/category/trending", label: "Trending" },
   { link: "/list", label: "Watchlist" },
 ];
 
@@ -56,14 +57,9 @@ export default function HeaderMenu() {
     }
 
     return (
-      <a
-        key={link.label}
-        href={link.link}
-        className={classes.link}
-        onClick={(e) => e.preventDefault()}
-      >
+      <Link key={link.label} to={link.link} className={classes.link}>
         {link.label}
-      </a>
+      </Link>
     );
   });
 
@@ -119,6 +115,7 @@ export default function HeaderMenu() {
             p={0}
             w={{ base: 100, sm: 150 }}
             src="src/assets/FlixExplorerLogo.png"
+            alt="Flix Explorer logo"
           />
           <Group gap={5} visibleFrom="sm">
             {items}

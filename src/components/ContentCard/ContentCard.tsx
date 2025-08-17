@@ -18,18 +18,26 @@ function ContentCard({ content }) {
         fit="cover"
         pt={0}
         mt={0}
+        alt={content.title + " movie poster"}
       />
-      <Text mt={-20}   style={{
-    backgroundImage: "linear-gradient(to right, rgba(17, 18, 19, 0.85) 0%, rgba(17, 18, 19s, 0.6) 40%, rgba(17, 18, 19, 0.0) 70%, rgba(17, 18, 19, 0.0) 100%)",
-    display: "inline-block", 
-    backgroundClip: "padding-box", 
-  }} c="#FFF"  px={10} size={"sm"}>
+      <Text
+        mt={-20}
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(17, 18, 19, 1) 0%, rgba(17, 18, 19, 0.6) 40%, rgba(17, 18, 19, 0.0) 50%, rgba(17, 18, 19, 0.0) 100%)",
+          display: "inline-block",
+          backgroundClip: "padding-box",
+        }}
+        c="#FFF"
+        px={10}
+        size={"sm"}
+      >
         {content.vote_average.toFixed(2)}⭐
       </Text>
-      <Title px={10} order={3} size={"sm"} mt={1}>
+      <Title  order={3} pt={5} size={"sm"} mt={1}>
         {content.title}
       </Title>
-      <Text c="dimmed" px={10} size={"sm"}>{`${month}, ${day} ${year}`}</Text>
+      <Text c="#343a40"  size={"sm"}>{`${month}, ${day} ${year}`}</Text>
     </Card>
   );
 }

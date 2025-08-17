@@ -46,7 +46,7 @@ export const getTrending = async () => {
   }
 };
 
-export const getSearch = async (searchTerm: string) => {
+export const getSearch = async (searchTerm: string, page: number = 1) => {
   try {
     const encodedSearchTerm = encodeURIComponent(searchTerm);
 
@@ -57,7 +57,7 @@ export const getSearch = async (searchTerm: string) => {
       },
       params: {
         query: encodedSearchTerm,
-        page: 1,
+        page,
         include_adult: false,
       },
     };
