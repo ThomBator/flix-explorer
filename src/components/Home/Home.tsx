@@ -47,8 +47,8 @@ function Home() {
   }
 
   //Made a simple fallabck in case the backdrop image is not available
-  const bgURL = popularData[0]?.backdrop_path
-    ? BASE_URL + popularData[0].backdrop_path
+  const bgURL = popularData.results[0]?.backdrop_path
+    ? BASE_URL + popularData.results[0].backdrop_path
     : fallbackBG;
 
   return (
