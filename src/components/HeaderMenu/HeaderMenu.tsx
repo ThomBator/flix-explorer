@@ -17,7 +17,7 @@ const links = [
   { link: "/", label: "Home" },
   { link: "/category/popular", label: "Popular" },
   { link: "/category/trending", label: "Trending" },
-  { link: "/list", label: "Watchlist" },
+  { link: "/watchlist", label: "Watchlist" },
 ];
 
 export default function HeaderMenu() {

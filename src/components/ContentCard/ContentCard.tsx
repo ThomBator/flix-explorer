@@ -7,7 +7,6 @@ function ContentCard({ content }) {
   const day = dateToFormat.getDate();
   const year = dateToFormat.getFullYear();
 
-  console.log(month, day, year);
 
   return (
     <Card w={150} pt={0} px={0} pb={2}>
