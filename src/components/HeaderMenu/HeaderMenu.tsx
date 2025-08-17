@@ -12,6 +12,7 @@ import {
 import { Link } from "react-router";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./HeaderMenu.module.css";
+import Logo from "../../assets/FlixExplorerLogo.png"
 
 const links = [
   { link: "/", label: "Home" },
@@ -114,7 +115,7 @@ export default function HeaderMenu() {
           <Image
             p={0}
             w={{ base: 100, sm: 150 }}
-            src="src/assets/FlixExplorerLogo.png"
+            src={Logo}
             alt="Flix Explorer logo"
           />
           <Group gap={5} visibleFrom="sm">

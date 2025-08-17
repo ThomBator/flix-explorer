@@ -3,6 +3,7 @@ import { useTrending } from "../../hooks/useTrending";
 import { Container, TextInput, Title, Text, Button } from "@mantine/core";
 import styles from "./Home.module.css";
 import CategoryCarousel from "../CategoryCarousel/CategoryCarousel";
+import fallbackBG from "../../assets/fallbackBG.png";
 
 function Home() {
   const BASE_URL = "https://image.tmdb.org/t/p/original";
@@ -28,7 +29,7 @@ function Home() {
   //Made a simple fallabck in case the backdrop image is not available
   const bgURL = popularData[0]?.backdrop_path
     ? BASE_URL + popularData[0].backdrop_path
-    : "src/assets/fallbackBG.png";
+    : fallbackBG;
 
   return (
     <>

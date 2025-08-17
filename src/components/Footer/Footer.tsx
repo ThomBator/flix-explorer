@@ -1,5 +1,6 @@
 
 import {  Anchor, Group, Image } from "@mantine/core";
+import Logo from "../../assets/FlixExplorerLogo.png"
 
 import classes from "./Footer.module.css";
 
@@ -27,7 +28,7 @@ export default function Footer() {
   return (
     <div className={classes.footer}>
       <div className={classes.inner}>
-        <Image   alt="Flix Explorer logo"  p={0} w={{ base: 100, sm:150,  }} src="src/assets/FlixExplorerLogo.png"/>
+        <Image   alt="Flix Explorer logo"  p={0} w={{ base: 100, sm:150,  }} src={Logo}/>
         <Group className={classes.links}>{items}</Group>
 
         <Group gap="xs" justify="flex-end" wrap="nowrap"></Group>
