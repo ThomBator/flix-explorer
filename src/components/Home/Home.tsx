@@ -1,22 +1,42 @@
+import { useState } from "react";
 import { usePopular } from "../../hooks/usePopular";
 import { useTrending } from "../../hooks/useTrending";
-import { Container, TextInput, Title, Text, Button } from "@mantine/core";
+import { useSearch } from "../../hooks/useSearch";
+import {
+  Container,
+  TextInput,
+  Title,
+  Text,
+  Button,
+  Group,
+} from "@mantine/core";
 import styles from "./Home.module.css";
 import CategoryCarousel from "../CategoryCarousel/CategoryCarousel";
 import fallbackBG from "../../assets/fallbackBG.png";
+import { useNavigate } from "react-router";
 
 function Home() {
   const BASE_URL = "https://image.tmdb.org/t/p/original";
+  const [input, setInput] = useState("");
+  const navigate = useNavigate(); 
   const {
     isPending: popularIsPending,
     error: popularError,
     data: popularData,
   } = usePopular();
+
   const {
     isPending: trendingIsPending,
     error: trendingError,
     data: trendingData,
   } = useTrending();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+     if (input.trim()) {
+    navigate(`/search?q=${encodeURIComponent(input.trim())}`);
+  }
+  };
 
   if (popularIsPending && trendingIsPending) {
     return <p>...Loading</p>;
@@ -57,14 +77,27 @@ function Home() {
             The possibilities are endless. Search our database to build your
             watchlist.
           </Text>
-          <TextInput mt={10} placeholder="Search for movies to watch tonight" />
-          <Button bg={"#D13900"} mt={8}>
-            Search
-          </Button>
+          <form onSubmit={handleSubmit}>
+            <TextInput
+              mt={5}
+              aria-label="Search movies"
+              value={input}
+              onChange={(e) => setInput(e.currentTarget.value)}
+              placeholder="Search for movies to watch tonight"
+              w="100%"
+            />
+            <Button mt={10} type="submit" bg="#D13900" disabled={!input.trim()}>
+              Search
+            </Button>
+          </form>
         </Container>
       </header>
-     {popularData &&  <CategoryCarousel title="Popular" categoryData={popularData} />}
-     { trendingData && <CategoryCarousel title="Trending" categoryData={trendingData} /> }
+      {popularData && (
+        <CategoryCarousel title="Popular" categoryData={popularData.results} />
+      )}
+      {trendingData && (
+        <CategoryCarousel title="Trending" categoryData={trendingData.results} />
+      )}
     </>
   );
 }

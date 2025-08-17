@@ -7,7 +7,7 @@ export const useTrending = () => {
     async () => {
       const data = await getTrending();
     
-      return data.results;
+      return data;
     }
   );
 

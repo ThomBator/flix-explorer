@@ -1,7 +1,8 @@
-import { getSearch } from "@/services/tmdbData";
+import { getSearch } from "../services/tmdbData";
 import { useReactQuery } from "./useReactQuery";
 import { useState, useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+
 export const useSearch = (initalTerm = "") => {
   const [term, setTerm] = useState(initalTerm);
   const [page, setPage] = useState(1);
@@ -10,7 +11,7 @@ export const useSearch = (initalTerm = "") => {
   const query = useReactQuery(["search", term], async () => {
     {
       const data = await getSearch(term);
-      return data.results;
+      return data;
     }
   });
 

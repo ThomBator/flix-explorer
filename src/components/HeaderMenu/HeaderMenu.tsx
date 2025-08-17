@@ -8,18 +8,13 @@ import {
   Drawer,
   Accordion,
   Image,
+  UnstyledButton
 } from "@mantine/core";
 import { Link } from "react-router";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./HeaderMenu.module.css";
-import Logo from "../../assets/FlixExplorerLogo.png"
-
-const links = [
-  { link: "/", label: "Home" },
-  { link: "/category/popular", label: "Popular" },
-  { link: "/category/trending", label: "Trending" },
-  { link: "/watchlist", label: "Watchlist" },
-];
+import Logo from "../../assets/FlixExplorerLogo.png";
+import { links } from "../../utilities/links";
 
 export default function HeaderMenu() {
   const [opened, { toggle, close }] = useDisclosure(false);
@@ -27,7 +22,7 @@ export default function HeaderMenu() {
   // DESKTOP items (hover menus)
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
-      <Menu.Item key={item.link} component="a" href={item.link}>
+      <Menu.Item key={item.link} component={Link} to={item.link}>
         {item.label}
       </Menu.Item>
     ));
@@ -35,22 +30,18 @@ export default function HeaderMenu() {
     if (menuItems) {
       return (
         <Menu
-          key={link.label}
+          key={link.label} 
           trigger="hover"
           transitionProps={{ exitDuration: 0 }}
           withinPortal
         >
           <Menu.Target>
-            <a
-              href={link.link}
-              className={classes.link}
-              onClick={(e) => e.preventDefault()}
-            >
-              <Center>
-                <span className={classes.linkLabel}>{link.label}</span>
-                <IconChevronDown size={14} stroke={1.5} />
-              </Center>
-            </a>
+             <UnstyledButton className={classes.link}>
+                <Center>
+                  <span className={classes.linkLabel}>{link.label}</span>
+                  <IconChevronDown size={14} stroke={1.5} />
+                </Center>
+            </UnstyledButton>
           </Menu.Target>
           <Menu.Dropdown>{menuItems}</Menu.Dropdown>
         </Menu>
@@ -58,7 +49,7 @@ export default function HeaderMenu() {
     }
 
     return (
-      <Link key={link.label} to={link.link} className={classes.link}>
+      <Link key={link.link} to={link.link} className={classes.link}>
         {link.label}
       </Link>
     );
@@ -72,21 +63,20 @@ export default function HeaderMenu() {
       {links.map((link) => {
         if (link.links?.length) {
           return (
-            <Accordion.Item key={link.label} value={link.label}>
+            <Accordion.Item key={link.link} value={link.label}>
               <Accordion.Control className={classes.mobileControl}>
                 {link.label}
               </Accordion.Control>
               <Accordion.Panel>
                 <div className={classes.mobilePanel}>
                   {link.links.map((item) => (
-                    <a
+                    <Link
                       key={item.link}
-                      href={item.link}
-                      className={classes.mobileLink}
-                      onClick={close}
+                      to={link.link}
+                      className={classes.link}
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </Accordion.Panel>
@@ -95,14 +85,9 @@ export default function HeaderMenu() {
         }
 
         return (
-          <a
-            key={link.label}
-            href={link.link}
-            className={classes.link}
-            onClick={(e) => e.preventDefault()}
-          >
+          <Link key={link.link} to={link.link} className={classes.link}>
             {link.label}
-          </a>
+          </Link>
         );
       })}
     </Accordion>
@@ -136,7 +121,7 @@ export default function HeaderMenu() {
         title={
           <Image
             w={{ base: 100, sm: 150, md: 300 }}
-            src="src/assets/FlixExplorerLogo.png"
+            src={Logo}
             alt="FlixExplorer Logo"
           />
         }

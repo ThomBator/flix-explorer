@@ -6,7 +6,7 @@ export const usePopular = () => {
     ["popular", "movies"],
     async () => {
       const data = await getPopular();
-      return data.results;
+      return data;
     }
   );
 

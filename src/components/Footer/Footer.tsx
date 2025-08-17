@@ -1,28 +1,16 @@
 
-import {  Anchor, Group, Image } from "@mantine/core";
+import {  Group, Image } from "@mantine/core";
 import Logo from "../../assets/FlixExplorerLogo.png"
+import { Link } from "react-router";
+import {links} from "../../utilities/links";
 
 import classes from "./Footer.module.css";
 
-const links = [
-  { link: "#", label: "Home" },
-  { link: "#", label: "Popular" },
-  { link: "#", label: "Trending" },
-  { link: "#", label: "Watchlist" },
-];
-
 export default function Footer() {
   const items = links.map((link) => (
-    <Anchor
-      c="#FFF"
-      key={link.label}
-      href={link.link}
-      lh={1}
-      onClick={(event) => event.preventDefault()}
-      size="sm"
-    >
-      {link.label}
-    </Anchor>
+   <Link key={link.link} to={link.link} className={classes.link}>
+        {link.label}
+      </Link>
   ));
 
   return (
