@@ -1,16 +1,19 @@
-import React from "react";
 import { useSearchParams } from "react-router";
 import { useSearch } from "../../hooks/useSearch";
-import { Image } from "@mantine/core";
+import { SimpleGrid, Container,Pagination } from "@mantine/core";
+import ContentCard from "../ContentCard/ContentCard";
+
 
 function SearchResultsPage() {
-  const BASE_URL = "https://image.tmdb.org/t/p/original";
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get("q") ? searchParams.get("q") : "";
-  const { data, isPending, error } = useSearch(searchQuery);
+  const searchPage = searchParams.get("page") ? searchParams.get("page") : 1; 
 
-   if (!searchQuery) return <p>No search term provided.</p>;
-  
+  const { data, isPending, error } = useSearch(searchQuery, +searchPage); 
+
+
+  if (!searchQuery) return <p>No search term provided.</p>;
+
   if (isPending) {
     return <div>...Loading</div>;
   }
@@ -18,20 +21,26 @@ function SearchResultsPage() {
     return <div>Error</div>;
   }
 
-  console.log(data); 
+  console.log(data);
 
   return (
-    <div>
-      <ul>
-        {data.results.map((item) => {
-          return (
-            <li key={item.id}>
-              <Image w={100} src={BASE_URL + item.poster_path} alt="" />
-            </li>
-          );
+    <Container ta="center" w={"80%"} mt={20}>
+      <h1>
+        Search Results For:{" "}
+        {searchQuery.slice(0, 1).toUpperCase() + searchQuery.slice(1)}
+      </h1>
+      <SimpleGrid cols={{ base: 1, sm: 2, lg: 5 }} spacing="md">
+        {data.results.map((content) => {
+          return <ContentCard content={content} />;
         })}
-      </ul>
-    </div>
+      </SimpleGrid>
+      <Pagination
+        total={data.total_pages}
+        value={+searchPage}
+        onChange={(pgNum) => setSearchParams({q: searchQuery, page:pgNum})}
+        mt="md"
+      />
+    </Container>
   );
 }
 

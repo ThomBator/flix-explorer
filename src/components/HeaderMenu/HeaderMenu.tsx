@@ -97,12 +97,14 @@ export default function HeaderMenu() {
     <header className={classes.header}>
       <Container w={"80%"}>
         <div className={classes.inner}>
-          <Image
+        <Link to={"/"}>
+        <Image
             p={0}
             w={{ base: 100, sm: 150 }}
             src={Logo}
             alt="Flix Explorer logo"
           />
+        </Link>  
           <Group gap={5} visibleFrom="sm">
             {items}
           </Group>

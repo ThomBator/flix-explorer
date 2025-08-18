@@ -2,7 +2,7 @@ import axios from "axios";
 const VITE_TMDB_READ_ACCESS_TOKEN = import.meta.env.VITE_TMDB_READ_ACCESS_TOKEN;
 const BASE_URL = "https://api.themoviedb.org/3";
 
-export const getPopular = async () => {
+export const getPopular = async (page=1) => {
   try {
     const options = {
       headers: {
@@ -12,7 +12,7 @@ export const getPopular = async () => {
       params: {
         language: "en-US",
         include_adult: false,
-        page: 1,
+        page,
       },
     };
 
@@ -24,7 +24,7 @@ export const getPopular = async () => {
   }
 };
 
-export const getTrending = async () => {
+export const getTrending = async (page=1) => {
   try {
     const options = {
       headers: {
@@ -34,7 +34,7 @@ export const getTrending = async () => {
       params: {
         language: "en-US",
         include_adult: false,
-        page: 1,
+        page,
       },
     };
 

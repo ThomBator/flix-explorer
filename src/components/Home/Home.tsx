@@ -10,15 +10,15 @@ import {
   Button,
   Group,
 } from "@mantine/core";
-import styles from "./Home.module.css";
+import classes from "./Home.module.css";
 import CategoryCarousel from "../CategoryCarousel/CategoryCarousel";
 import fallbackBG from "../../assets/fallbackBG.png";
 import { useNavigate } from "react-router";
+import { BASE_URL } from "../../utilities/baseURL";
 
 function Home() {
-  const BASE_URL = "https://image.tmdb.org/t/p/original";
   const [input, setInput] = useState("");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const {
     isPending: popularIsPending,
     error: popularError,
@@ -33,9 +33,9 @@ function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-     if (input.trim()) {
-    navigate(`/search?q=${encodeURIComponent(input.trim())}`);
-  }
+    if (input.trim()) {
+      navigate(`/search?q=${encodeURIComponent(input.trim())}&page=1`);
+    }
   };
 
   if (popularIsPending && trendingIsPending) {
@@ -54,7 +54,7 @@ function Home() {
   return (
     <>
       <header
-        className={styles.mainHeader}
+        className={classes.mainHeader}
         style={{
           backgroundImage: ` linear-gradient(
         to top,
@@ -93,10 +93,14 @@ function Home() {
         </Container>
       </header>
       {popularData && (
-        <CategoryCarousel title="Popular" categoryData={popularData.results} />
+        <CategoryCarousel title="Popular" url="/category/popular?page=1" categoryData={popularData.results} />
       )}
       {trendingData && (
-        <CategoryCarousel title="Trending" categoryData={trendingData.results} />
+        <CategoryCarousel
+          title="Trending"
+          url="/category/trending?page=1"
+          categoryData={trendingData.results}
+        />
       )}
     </>
   );
