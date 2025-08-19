@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { usePopular } from "../../hooks/usePopular";
 import { useTrending } from "../../hooks/useTrending";
-import { useSearch } from "../../hooks/useSearch";
 import {
   Container,
   TextInput,
   Title,
   Text,
   Button,
-  Group,
 } from "@mantine/core";
 import classes from "./Home.module.css";
 import CategoryCarousel from "../CategoryCarousel/CategoryCarousel";
@@ -47,7 +45,7 @@ function Home() {
   }
 
   //Made a simple fallabck in case the backdrop image is not available
-  const bgURL = popularData.results[0]?.backdrop_path
+  const bgURL = popularData?.results[0]?.backdrop_path
     ? BASE_URL + popularData.results[0].backdrop_path
     : fallbackBG;
 

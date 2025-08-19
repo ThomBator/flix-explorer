@@ -59,7 +59,7 @@ export default function HeaderMenu() {
     /*Might remove this later, only needed if I end up with nested menus. Accordion pattern looked better on mobile */
   }
   const mobileItems = (
-    <Accordion chevronPosition="right" variant="separated">
+    <Accordion chevronPosition="right" variant="separated" >
       {links.map((link) => {
         if (link.links?.length) {
           return (
@@ -72,8 +72,9 @@ export default function HeaderMenu() {
                   {link.links.map((item) => (
                     <Link
                       key={item.link}
-                      to={link.link}
+                      to={item.link}
                       className={classes.link}
+                      onClick={close}
                     >
                       {item.label}
                     </Link>
@@ -85,7 +86,7 @@ export default function HeaderMenu() {
         }
 
         return (
-          <Link key={link.link} to={link.link} className={classes.link}>
+          <Link key={link.link}  onClick={toggle} to={link.link} className={classes.link}>
             {link.label}
           </Link>
         );
