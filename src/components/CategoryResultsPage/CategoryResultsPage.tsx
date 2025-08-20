@@ -1,23 +1,28 @@
-import React from "react";
 import { useParams, useSearchParams } from "react-router";
-import { SimpleGrid, Container, Pagination } from "@mantine/core";
+import { SimpleGrid, Flex, Pagination } from "@mantine/core";
 import ContentCard from "../ContentCard/ContentCard";
-import { usePopular } from "../../hooks/usePopular";
-import { useTrending } from "../../hooks/useTrending";
+import { usePopular } from "@/hooks/data-hooks/usePopular";
+import { useTrending } from "@/hooks/data-hooks/useTrending";
+import { useSearch } from "@/hooks/data-hooks/useSearch";
 
 function CategoryResultsPage() {
   const category = useParams().name;
 
   const [searchParams, setSearchParams] = useSearchParams();
   const searchPage = searchParams.get("page") ? searchParams.get("page") : 1;
-
+  const searchQuery = searchParams.get("q") ? searchParams.get("q") : "";
   //React Query has a prop that will only fire the hook if the category is enabled
   //Passing a boolean to my custom hook will make sure we only fetch one category at a time
-  const popular = usePopular(category === "popular", +searchPage);
-  const trending = useTrending(category === "trending", +searchPage);
+  const popular = usePopular(+searchPage, category === "popular");
+  const trending = useTrending(+searchPage, category === "trending");
+  const search = useSearch(searchQuery, +searchPage, category === "search");
 
   const { isPending, error, data } =
-    category === "popular" ? popular : trending;
+    category === "popular"
+      ? popular
+      : category === "trending"
+      ? trending
+      : search;
 
   if (isPending) {
     return <div>...Loading</div>;
@@ -29,8 +34,22 @@ function CategoryResultsPage() {
   console.log("data", data);
 
   return (
-    <Container ta="center" w={"80%"} mt={20}>
-      <h1>{category.slice(0, 1).toUpperCase() + category.slice(1)}</h1>
+    <Flex
+      mt={20}
+      direction="column"
+      gap={{ base: "sm", sm: "lg" }}
+      justify="center"
+      align="center"
+    >
+      {!search && (
+        <h1>{category.slice(0, 1).toUpperCase() + category.slice(1)}</h1>
+      )}
+      {search && (
+        <h1>
+          Search Results For:{" "}
+          {searchQuery.slice(0, 1).toUpperCase() + searchQuery.slice(1)}
+        </h1>
+      )}
       <SimpleGrid cols={{ base: 1, sm: 2, lg: 5 }} spacing="md">
         {data.results.map((content) => {
           return <ContentCard content={content} />;
@@ -43,7 +62,7 @@ function CategoryResultsPage() {
         onChange={(pgNum) => setSearchParams({ page: pgNum })}
         mt="md"
       />
-    </Container>
+    </Flex>
   );
 }
 

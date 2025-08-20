@@ -1,21 +1,25 @@
 import { useState } from "react";
-import { usePopular } from "../../hooks/usePopular";
-import { useTrending } from "../../hooks/useTrending";
+import { Link } from "react-router";
+import { usePopular } from "../../hooks/data-hooks/usePopular";
+import { useTrending } from "../../hooks/data-hooks/useTrending";
+import { useSearch } from "@/hooks/data-hooks/useSearch";
 import {
   Container,
   TextInput,
   Title,
   Text,
   Button,
+  Popover,
 } from "@mantine/core";
-import classes from "./Home.module.css";
 import CategoryCarousel from "../CategoryCarousel/CategoryCarousel";
-import fallbackBG from "../../assets/fallbackBG.png";
+import PageHeader from "../PageHeader/PageHeader";
 import { useNavigate } from "react-router";
-import { BASE_URL } from "../../utilities/baseURL";
+import SearchResultsListItem from "../SearchResultsListItem/SearchResultsListItem";
+import classes from "./Home.module.css";
 
 function Home() {
   const [input, setInput] = useState("");
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const {
     isPending: popularIsPending,
@@ -29,10 +33,16 @@ function Home() {
     data: trendingData,
   } = useTrending();
 
+  const {
+    isPending: searchIsPending,
+    error: searchError,
+    data: searchData,
+  } = useSearch(input);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim()) {
-      navigate(`/search?q=${encodeURIComponent(input.trim())}&page=1`);
+      navigate(`/category/search?q=${encodeURIComponent(input.trim())}&page=1`);
     }
   };
 
@@ -40,32 +50,16 @@ function Home() {
     return <p>...Loading</p>;
   }
 
-  if (popularError && trendingError) {
+  if (popularError && trendingError && searchError) {
     return <p>Error, contact site admin.</p>;
   }
 
   //Made a simple fallabck in case the backdrop image is not available
-  const bgURL = popularData?.results[0]?.backdrop_path
-    ? BASE_URL + popularData.results[0].backdrop_path
-    : fallbackBG;
+  const bgPath = popularData?.results[0]?.backdrop_path ?? null;
 
   return (
     <>
-      <header
-        className={classes.mainHeader}
-        style={{
-          backgroundImage: ` linear-gradient(
-        to top,
-        rgba(39, 55, 69, 0.85) 0%,
-        rgba(39, 55, 69, 0.6) 40%,
-        rgba(39, 55, 69, 0.3) 70%,
-        rgba(39, 55, 69, 0.2) 100%
-      ),url(${bgURL})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "50% 35%",
-        }}
-      >
+      <PageHeader bgPath={bgPath}>
         <Container ta={"left"} w={"80%"}>
           {" "}
           <Title order={1} c={"#FFF"}>
@@ -75,23 +69,65 @@ function Home() {
             The possibilities are endless. Search our database to build your
             watchlist.
           </Text>
-          <form onSubmit={handleSubmit}>
-            <TextInput
-              mt={5}
-              aria-label="Search movies"
-              value={input}
-              onChange={(e) => setInput(e.currentTarget.value)}
-              placeholder="Search for movies to watch tonight"
-              w="100%"
-            />
-            <Button mt={10} type="submit" bg="#D13900" disabled={!input.trim()}>
-              Search
-            </Button>
-          </form>
+          <Popover
+            width="target"
+            position="bottom"
+            hideDetached={false}
+            opened={open}
+            offset={{ mainAxis: -46, crossAxis: 0 }}
+          >
+            <Popover.Target>
+              <form
+                onFocus={() => setOpen(true)}
+                onBlur={() => setOpen(false)}
+                onSubmit={handleSubmit}
+              >
+                <TextInput
+                  mt={5}
+                  aria-label="Search movies"
+                  value={input}
+                  onChange={(e) => setInput(e.currentTarget.value)}
+                  placeholder="Search for movies to watch tonight"
+                  w="100%"
+                />
+                <Button
+                  mt={10}
+                  type="submit"
+                  bg="#D13900"
+                  className={classes.searchButton}
+                  disabled={!input.trim()}
+                >
+                  Search
+                </Button>
+              </form>
+            </Popover.Target>
+            {input && (
+              <Popover.Dropdown>
+                {searchData &&
+                  searchData.results
+                    .slice(0, 5)
+                    .map((result) => <SearchResultsListItem result={result} />)}
+                {input && (
+                  <Link
+                    to={`/category/search?q=${encodeURIComponent(
+                      input.trim()
+                    )}&page=1`}
+                  >
+                    See More
+                  </Link>
+                )}
+              </Popover.Dropdown>
+            )}
+          </Popover>
         </Container>
-      </header>
+      </PageHeader>
+
       {popularData && (
-        <CategoryCarousel title="Popular" url="/category/popular?page=1" categoryData={popularData.results} />
+        <CategoryCarousel
+          title="Popular"
+          url="/category/popular?page=1"
+          categoryData={popularData.results}
+        />
       )}
       {trendingData && (
         <CategoryCarousel

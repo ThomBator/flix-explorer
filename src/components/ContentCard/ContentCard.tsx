@@ -12,8 +12,8 @@ function ContentCard({ content }) {
   const posterURI = content.poster_path ? BASE_URL + content.poster_path : Logo;
 
   return (
-    <Link to={"/category/popular"} style={{textDecoration: "none"}}>
-      <Card w={150} pt={0} px={0} pb={2}>
+    <Link to={`/details/${content.id}`} style={{ textDecoration: "none" }}>
+      <Card w={150} pt={0} px={0} pb={2} bg="var(--mantine-color-body)">
         <Image
           h={250}
           src={posterURI}
@@ -40,7 +40,10 @@ function ContentCard({ content }) {
         <Title order={3} pt={5} size={"sm"} mt={1}>
           {content.title}
         </Title>
-        <Text c="#343a40" size={"sm"}>{`${month}, ${day} ${year}`}</Text>
+        <Text
+          c="var(--dim-text)"
+          size={"sm"}
+        >{`${month}, ${day} ${year}`}</Text>
       </Card>
     </Link>
   );

@@ -5,12 +5,6 @@ import { Link } from "react-router";
 import classes from "./CategoryCarousel.module.css";
 
 function CategoryCarousel({ title, url, categoryData }) {
-  const slides = categoryData.map((content) => (
-    <Carousel.Slide key={content.id}>
-      <ContentCard content={content} />
-    </Carousel.Slide>
-  ));
-
   return (
     <Container className={classes.container} my={50}>
       <Title mb={15} order={2}>
@@ -24,7 +18,11 @@ function CategoryCarousel({ title, url, categoryData }) {
         withControls
         withIndicators={false}
       >
-        {slides}
+        {categoryData.map((content) => (
+          <Carousel.Slide key={content.id}>
+            <ContentCard content={content} />
+          </Carousel.Slide>
+        ))}
       </Carousel>
       <Link className={classes.seeMore} to={url}>
         see more

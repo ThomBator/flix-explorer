@@ -1,7 +1,7 @@
-import { getTrending } from "../services/tmdbData";
-import { useReactQuery } from "./useReactQuery";
+import { getTrending } from "@/services/tmdb";
+import { useReactQuery } from "../useReactQuery";
 
-export const useTrending = (enabled = true, page) => {
+export const useTrending = (page = 1, enabled = true) => {
   const { isPending, error, data } = useReactQuery(
     ["trending", "movies", page],
     async () => {

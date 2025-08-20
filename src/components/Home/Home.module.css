@@ -1,33 +1,3 @@
-.mainHeader {
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-start;
-  justify-content: center;
-  margin-top: 0;
-  padding-top: 0;
-  height: 28rem;
-  gap: 1rem;
-  animation: moveBackground 30s ease-in-out infinite alternate;
-}
-
-@keyframes moveBackground {
-  0% {
-    background-position:  35% 50% ;
-  }
-  25% {
-    background-position:  45% 52% ;
-  }
-  50% {
-    background-position:  55% 50% ;
-  }
-  75% {
-    background-position: 45% 48%;
-  }
-  100% {
-    background-position: 35% 50% ;
-  }
-}
-
-@media (prefers-reduced-motion:reduce) {
- .mainHeader {animation: none;}
+.searchButton:disabled {
+  color: #edeef0ff;
 }

@@ -1,6 +1,7 @@
 import { IconChevronDown } from "@tabler/icons-react";
 import {
   Burger,
+  Button,
   Center,
   Container,
   Group,
@@ -8,16 +9,25 @@ import {
   Drawer,
   Accordion,
   Image,
-  UnstyledButton
+  UnstyledButton,
+  useMantineColorScheme,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { Link } from "react-router";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./HeaderMenu.module.css";
-import Logo from "../../assets/FlixExplorerLogo.png";
+import LogoLight from "../../assets/FlixExplorerLogo.png";
+import LogoDark from "../../assets/FlixExplorerLogo_inverted_keepRed.png";
 import { links } from "../../utilities/links";
 
 export default function HeaderMenu() {
   const [opened, { toggle, close }] = useDisclosure(false);
+  const { setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme("light");
+
+  const toggleColorScheme = () => {
+    setColorScheme(computedColorScheme === "dark" ? "light" : "dark");
+  };
 
   // DESKTOP items (hover menus)
   const items = links.map((link) => {
@@ -30,17 +40,17 @@ export default function HeaderMenu() {
     if (menuItems) {
       return (
         <Menu
-          key={link.label} 
+          key={link.label}
           trigger="hover"
           transitionProps={{ exitDuration: 0 }}
           withinPortal
         >
           <Menu.Target>
-             <UnstyledButton className={classes.link}>
-                <Center>
-                  <span className={classes.linkLabel}>{link.label}</span>
-                  <IconChevronDown size={14} stroke={1.5} />
-                </Center>
+            <UnstyledButton className={classes.link}>
+              <Center>
+                <span className={classes.linkLabel}>{link.label}</span>
+                <IconChevronDown size={14} stroke={1.5} />
+              </Center>
             </UnstyledButton>
           </Menu.Target>
           <Menu.Dropdown>{menuItems}</Menu.Dropdown>
@@ -59,7 +69,7 @@ export default function HeaderMenu() {
     /*Might remove this later, only needed if I end up with nested menus. Accordion pattern looked better on mobile */
   }
   const mobileItems = (
-    <Accordion chevronPosition="right" variant="separated" >
+    <Accordion chevronPosition="right" variant="separated">
       {links.map((link) => {
         if (link.links?.length) {
           return (
@@ -86,7 +96,12 @@ export default function HeaderMenu() {
         }
 
         return (
-          <Link key={link.link}  onClick={toggle} to={link.link} className={classes.link}>
+          <Link
+            key={link.link}
+            onClick={toggle}
+            to={link.link}
+            className={classes.link}
+          >
             {link.label}
           </Link>
         );
@@ -98,17 +113,28 @@ export default function HeaderMenu() {
     <header className={classes.header}>
       <Container w={"80%"}>
         <div className={classes.inner}>
-        <Link to={"/"}>
-        <Image
-            p={0}
-            w={{ base: 100, sm: 150 }}
-            src={Logo}
-            alt="Flix Explorer logo"
-          />
-        </Link>  
+          <Link to={"/"}>
+            <Image
+              p={0}
+              w={{ base: 100, sm: 150 }}
+              src={computedColorScheme === "light" ? LogoLight : LogoDark}
+              alt="Flix Explorer logo"
+            />
+          </Link>
           <Group gap={5} visibleFrom="sm">
             {items}
           </Group>
+
+          <Button
+            size="sm"
+            variant="transparent"
+            onClick={toggleColorScheme}
+            visibleFrom="sm"
+          >
+            {computedColorScheme === "light"
+              ? computedColorScheme + " ☀️"
+              : computedColorScheme + " 🌔"}
+          </Button>
 
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
         </div>
@@ -124,13 +150,18 @@ export default function HeaderMenu() {
         title={
           <Image
             w={{ base: 100, sm: 150, md: 300 }}
-            src={Logo}
+            src={computedColorScheme === "light" ? LogoLight : LogoDark}
             alt="FlixExplorer Logo"
           />
         }
         overlayProps={{ backgroundOpacity: 0, blur: 2 }}
       >
         {mobileItems}
+        <Button size="sm" variant="link" onClick={toggleColorScheme}>
+          {computedColorScheme === "light"
+            ? computedColorScheme + "😎"
+            : computedColorScheme + "🌚"}
+        </Button>
       </Drawer>
     </header>
   );

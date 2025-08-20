@@ -1,23 +1,41 @@
+import { Routes, Route } from "react-router";
 import HeaderMenu from "./components/HeaderMenu/HeaderMenu";
 import Home from "./components/Home/Home";
-import SearchResultsPage from "./components/SearchResultsPage/SearchResultsPage";
 import CategoryResultsPage from "./components/CategoryResultsPage/CategoryResultsPage";
+import DetailsPage from "./components/DetailsPage/DetailsPage";
 import Footer from "./components/Footer/Footer";
-import { Routes, Route } from "react-router";
+import { AppShell, Box } from "@mantine/core";
+import { useHeadroom } from "@mantine/hooks";
+
 import Watchlist from "./components/Watchlist/Watchlist";
 
 function App() {
+  const pinned = useHeadroom({ fixedAt: 30 });
   return (
-    <>
-      <HeaderMenu />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/search/" element={<SearchResultsPage />} />
-        <Route path="/category/:name" element={<CategoryResultsPage />} />
-        <Route path="/watchlist" element={<Watchlist />} />
-      </Routes>
-      <Footer />
-    </>
+    <AppShell
+      withBorder={false}
+      header={{ height: 60, collapsed: !pinned, offset: false }}
+    >
+      <AppShell.Header bg="var(--header-bg)">
+        <HeaderMenu />
+      </AppShell.Header>
+      <AppShell.Main>
+        <Box mih="100dvh" style={{ display: "flex", flexDirection: "column" }}>
+          <HeaderMenu />
+          <Box component="main" style={{ flex: 1 }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/category/:name" element={<CategoryResultsPage />} />
+              <Route path="/watchlist" element={<Watchlist />} />
+              <Route path="/details/:id" element={<DetailsPage />} />
+            </Routes>
+          </Box>
+          <Box mt="auto">
+            <Footer />
+          </Box>
+        </Box>
+      </AppShell.Main>
+    </AppShell>
   );
 }
 

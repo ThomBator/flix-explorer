@@ -1,8 +1,4 @@
 .footer {
-  margin-top: 120px;
-  border-top: 1px solid
-    light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
-
   background-color: rgba(39, 55, 69, 0.85);
 }
 
@@ -13,7 +9,7 @@
 }
 
 .link:hover {
-  background-color: rgba(134, 142, 150, 0.12)
+  background-color: rgba(134, 142, 150, 0.12);
 }
 
 .inner {

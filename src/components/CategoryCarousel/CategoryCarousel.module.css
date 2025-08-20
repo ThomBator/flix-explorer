@@ -1,16 +1,16 @@
-.container { 
-    position: relative; 
+.container {
+  position: relative;
 }
 
 .seeMore {
- position: absolute;
- top: 20px;
- right: 15px; 
- text-decoration: none; 
- color:#343a40; 
- font-weight: 600;
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  text-decoration: none;
+  color: var(--dim-text);
+  font-weight: 600;
 }
 
 .seeMore:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }

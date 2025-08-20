@@ -5,7 +5,6 @@ export const useReactQuery = (key, queryFn, options = {}) => {
   const { isPending, error, data, isFetching } = useQuery({
     queryKey: key,
     queryFn,
-    staleTime: 5 * 60 * 1000, //refresh every 5 minutes to limit API calls
     retry: 1,
     ...options,
   });
