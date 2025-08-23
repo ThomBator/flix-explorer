@@ -1,4 +1,4 @@
-import { Group, Image } from "@mantine/core";
+import { Group, Image, Container } from "@mantine/core";
 import LogoLight from "../../assets/FlixExplorerLogo.png";
 import LogoDark from "../../assets/FlixExplorerLogo_inverted_keepRed.png";
 import { Link } from "react-router";
@@ -17,18 +17,19 @@ export default function Footer() {
   ));
 
   return (
-    <div className={classes.footer}>
-      <div className={classes.inner}>
-        <Image
-          alt="Flix Explorer logo"
-          p={0}
-          w={{ base: 100, sm: 150 }}
-          src={computedColorScheme === "light" ? LogoLight : LogoDark}
-        />
-        <Group className={classes.links}>{items}</Group>
-
-        <Group gap="xs" justify="flex-end" wrap="nowrap"></Group>
-      </div>
-    </div>
+    <footer className={classes.footer}>
+      <Container>
+        <div className={classes.inner}>
+          <Image
+            alt="Flix Explorer logo"
+            p={0}
+            w={{ base: 100, sm: 150 }}
+            src={computedColorScheme === "light" ? LogoLight : LogoDark}
+            fit="contain"
+          />
+          <Group className={classes.links}>{items}</Group>
+        </div>
+      </Container>
+    </footer>
   );
 }

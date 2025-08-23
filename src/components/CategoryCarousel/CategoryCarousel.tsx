@@ -6,8 +6,8 @@ import classes from "./CategoryCarousel.module.css";
 
 function CategoryCarousel({ title, url, categoryData }) {
   return (
-    <Container className={classes.container} my={50}>
-      <Title mb={15} order={2}>
+    <Container className={`${classes.container} carousel-fade`} my={50}>
+      <Title c="dimText" mb={15} order={2}>
         {title}
       </Title>
       <Carousel
@@ -24,7 +24,7 @@ function CategoryCarousel({ title, url, categoryData }) {
           </Carousel.Slide>
         ))}
       </Carousel>
-      <Link className={classes.seeMore} to={url}>
+      <Link className={classes.seeMore} to={url} c="dimText">
         see more
       </Link>
     </Container>

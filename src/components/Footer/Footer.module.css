@@ -1,11 +1,11 @@
 .footer {
-  background-color: rgba(39, 55, 69, 0.85);
+  background-color: #475561;
 }
 
 .link {
   text-decoration: none;
   color: #fff;
-  padding: 8px 12px;
+  padding: 8px;
 }
 
 .link:hover {
@@ -14,20 +14,16 @@
 
 .inner {
   display: flex;
-  width: 80%;
-  margin: auto;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  padding: var(--mantine-spacing-md) var(--mantine-spacing-md);
-
-  @media (max-width: $mantine-breakpoint-sm) {
-    flex-direction: column;
-  }
+  padding-block: var(--mantine-spacing-md);
+  padding-inline: 0;
 }
-
-.links {
-  @media (max-width: $mantine-breakpoint-sm) {
-    margin-top: var(--mantine-spacing-lg);
-    margin-bottom: var(--mantine-spacing-sm);
+.inner {
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    padding-block: 3rem;
+    padding-inline: var(--mantine-spacing-md);
+    align-items: flex-start;
   }
 }

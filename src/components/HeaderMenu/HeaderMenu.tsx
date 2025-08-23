@@ -111,7 +111,7 @@ export default function HeaderMenu() {
 
   return (
     <header className={classes.header}>
-      <Container w={"80%"}>
+      <Container>
         <div className={classes.inner}>
           <Link to={"/"}>
             <Image
@@ -157,7 +157,12 @@ export default function HeaderMenu() {
         overlayProps={{ backgroundOpacity: 0, blur: 2 }}
       >
         {mobileItems}
-        <Button size="sm" variant="link" onClick={toggleColorScheme}>
+        <Button
+          size="sm"
+          variant="transparent"
+          onClick={toggleColorScheme}
+          pl={12}
+        >
           {computedColorScheme === "light"
             ? computedColorScheme + "😎"
             : computedColorScheme + "🌚"}

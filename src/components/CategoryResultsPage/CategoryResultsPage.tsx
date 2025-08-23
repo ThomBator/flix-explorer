@@ -1,5 +1,5 @@
 import { useParams, useSearchParams } from "react-router";
-import { SimpleGrid, Flex, Pagination } from "@mantine/core";
+import { SimpleGrid, Flex, Pagination, Title } from "@mantine/core";
 import ContentCard from "../ContentCard/ContentCard";
 import { usePopular } from "@/hooks/data-hooks/usePopular";
 import { useTrending } from "@/hooks/data-hooks/useTrending";
@@ -16,6 +16,9 @@ function CategoryResultsPage() {
   const popular = usePopular(+searchPage, category === "popular");
   const trending = useTrending(+searchPage, category === "trending");
   const search = useSearch(searchQuery, +searchPage, category === "search");
+  const isSearch = search.data?.results?.length > 0;
+
+  console.log("data", popular);
 
   const { isPending, error, data } =
     category === "popular"
@@ -31,8 +34,6 @@ function CategoryResultsPage() {
     return <div>Error</div>;
   }
 
-  console.log("data", data);
-
   return (
     <Flex
       mt={20}
@@ -41,17 +42,19 @@ function CategoryResultsPage() {
       justify="center"
       align="center"
     >
-      {!search && (
-        <h1>{category.slice(0, 1).toUpperCase() + category.slice(1)}</h1>
+      {!isSearch && (
+        <Title order={1} c="dimText">
+          {category.slice(0, 1).toUpperCase() + category.slice(1)}
+        </Title>
       )}
-      {search && (
-        <h1>
+      {isSearch && (
+        <Title order={1} c="dimText">
           Search Results For:{" "}
           {searchQuery.slice(0, 1).toUpperCase() + searchQuery.slice(1)}
-        </h1>
+        </Title>
       )}
       <SimpleGrid cols={{ base: 1, sm: 2, lg: 5 }} spacing="md">
-        {data.results.map((content) => {
+        {data?.results?.map((content) => {
           return <ContentCard content={content} />;
         })}
       </SimpleGrid>

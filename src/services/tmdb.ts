@@ -5,21 +5,25 @@ const BASE_URL = "https://api.themoviedb.org/3";
 //rename tmdb not tmdb data
 //Look up an Axios Instance and configure the common properties
 
+const instance = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    accept: "application/json",
+    Authorization: `Bearer ${VITE_TMDB_READ_ACCESS_TOKEN}`,
+  },
+  params: {
+    language: "en-US",
+    include_adult: false,
+  },
+});
+
 export const getPopular = async (page = 1) => {
   try {
-    const options = {
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${VITE_TMDB_READ_ACCESS_TOKEN}`,
-      },
-      params: {
-        language: "en-US",
-        include_adult: false,
-        page,
-      },
-    };
-
-    const response = await axios.get(BASE_URL + "/movie/popular", options);
+    const response = await instance({
+      url: "/movie/popular",
+      method: "get",
+      params: { ...instance.defaults.params, page },
+    });
 
     return response.data;
   } catch (error) {
@@ -29,19 +33,11 @@ export const getPopular = async (page = 1) => {
 
 export const getTrending = async (page = 1) => {
   try {
-    const options = {
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${VITE_TMDB_READ_ACCESS_TOKEN}`,
-      },
-      params: {
-        language: "en-US",
-        include_adult: false,
-        page,
-      },
-    };
-
-    const response = await axios.get(BASE_URL + "/trending/movie/day", options);
+    const response = await instance({
+      url: "/trending/movie/day",
+      method: "get",
+      params: { ...instance.defaults.params, page },
+    });
 
     return response.data;
   } catch (error) {
@@ -53,19 +49,11 @@ export const getSearch = async (searchTerm: string, page: number = 1) => {
   try {
     const encodedSearchTerm = encodeURIComponent(searchTerm);
 
-    const options = {
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${VITE_TMDB_READ_ACCESS_TOKEN}`,
-      },
-      params: {
-        query: encodedSearchTerm,
-        page,
-        include_adult: false,
-      },
-    };
-
-    const response = await axios.get(BASE_URL + "/search/movie", options);
+    const response = await instance({
+      url: "/search/movie",
+      method: "get",
+      params: { ...instance.defaults.params, page, query: encodedSearchTerm },
+    });
 
     return response.data;
   } catch (error) {
@@ -75,20 +63,36 @@ export const getSearch = async (searchTerm: string, page: number = 1) => {
 
 export const getDetails = async (id) => {
   try {
-    const options = {
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${VITE_TMDB_READ_ACCESS_TOKEN}`,
-      },
-      params: {
-        language: "en-US",
-        include_adult: false,
-      },
+    const response = await instance({
+      url: `/movie/${id}`,
+      method: "get",
+    });
+
+    const videoResponse = await instance({
+      url: `/movie/${id}/videos`,
+      method: "get",
+    });
+
+    const creditResponse = await instance({
+      url: `/movie/${id}/credits`,
+      method: "get",
+    });
+
+    const reviewResponse = await instance({
+      url: `/movie/${id}/reviews`,
+      method: "get",
+    });
+
+    console.log("Cresponse", reviewResponse);
+
+    const data = {
+      ...response.data,
+      trailers: videoResponse.data.results,
+      credits: creditResponse.data.cast,
+      reviews: reviewResponse.data.results,
     };
 
-    const response = await axios.get(BASE_URL + `/movie/${id}`, options);
-
-    return response.data;
+    return data;
   } catch (error) {
     console.log(error);
   }

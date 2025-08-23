@@ -1,5 +1,5 @@
-import { createTheme } from "@mantine/core";
-import type { MantineColorsTuple, CSSVariablesResolver } from "@mantine/core";
+import { colorsTuple, createTheme, virtualColor } from "@mantine/core";
+import { type MantineColorsTuple } from "@mantine/core";
 
 // --- Your palettes as-is ---
 export const lightBrand: MantineColorsTuple = [
@@ -28,42 +28,34 @@ export const darkBrand: MantineColorsTuple = [
   "#951322",
 ];
 
-// Helper to map a brand tuple to Mantine CSS vars
-const toBrandVars = (tuple: MantineColorsTuple) =>
-  Object.fromEntries(
-    tuple.map((v, i) => [`--mantine-color-brand-${i}`, v])
-  ) as Record<string, string>;
-
 export const theme = createTheme({
   primaryColor: "brand",
-  colors: { brand: lightBrand },
-  // expose your text tokens as CSS vars so they can swap by scheme
-  other: {
-    mainText: "var(--main-text)",
-    alternateText: "var(--alt-text)",
-    dimText: "var(--dim-text)",
-  },
-});
+  colors: {
+    mainTextLight: colorsTuple("#000"),
+    mainTextDark: colorsTuple("#FFF"),
+    mainText: virtualColor({
+      name: "mainText",
+      dark: "mainTextDark",
+      light: "mainTextLight",
+    }),
+    altText: colorsTuple("#FFF"),
 
-export const cssVariablesResolver: CSSVariablesResolver = () => ({
-  variables: {
-    ...toBrandVars(lightBrand),
-    "--main-text": "#000",
-    "--alt-text": "#fff",
-    "--dim-text": "#343a40",
-  },
-  light: {
-    ...toBrandVars(lightBrand),
-    "--header-bg": "#fff",
-    "--main-text": "#000",
-    "--alt-text": "#fff",
-    "--dim-text": "#343a40",
-  },
-  dark: {
-    ...toBrandVars(darkBrand),
-    "--header-bg": "#273745d9",
-    "--main-text": "#fff",
-    "--alt-text": "#000",
-    "--dim-text": "#edeef0ff",
+    dimTextLight: colorsTuple("#343a40"),
+    dimTextDark: colorsTuple("#edeef0ff"),
+    dimText: virtualColor({
+      name: "dimText",
+      dark: "dimTextDark",
+      light: "dimTextLight",
+    }),
+    lightBrand,
+    darkBrand,
+
+    accentBg: colorsTuple("#475561"),
+
+    brand: virtualColor({
+      name: "brand",
+      dark: "darkBrand",
+      light: "lightBrand",
+    }),
   },
 });

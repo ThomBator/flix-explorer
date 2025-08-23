@@ -16,13 +16,16 @@ function App() {
       withBorder={false}
       header={{ height: 60, collapsed: !pinned, offset: false }}
     >
-      <AppShell.Header bg="var(--header-bg)">
+      <AppShell.Header bg="headerBg" pt={40} pb={80}>
         <HeaderMenu />
       </AppShell.Header>
       <AppShell.Main>
-        <Box mih="100dvh" style={{ display: "flex", flexDirection: "column" }}>
-          <HeaderMenu />
-          <Box component="main" style={{ flex: 1 }}>
+        <Box
+          pt={120}
+          mih="100dvh"
+          style={{ display: "flex", flexDirection: "column" }}
+        >
+          <Box mb={50} component="main" style={{ flex: 1 }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/category/:name" element={<CategoryResultsPage />} />

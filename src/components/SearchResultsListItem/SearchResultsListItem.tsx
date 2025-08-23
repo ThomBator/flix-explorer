@@ -14,7 +14,7 @@ function SearchResultsListItem({ result }) {
     <Link className={classes.link} to={`/details/${result.id}`}>
       <Flex className={classes.flex} p={10} gap={10} align="flex-end">
         <Image w={100} src={posterURI} />
-        <Text c="#000"> {`${result.title} (${yearStr})`}</Text>
+        <Text c="mainText"> {`${result.title} (${yearStr})`}</Text>
       </Flex>
     </Link>
   );

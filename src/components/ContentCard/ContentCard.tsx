@@ -40,10 +40,7 @@ function ContentCard({ content }) {
         <Title order={3} pt={5} size={"sm"} mt={1}>
           {content.title}
         </Title>
-        <Text
-          c="var(--dim-text)"
-          size={"sm"}
-        >{`${month}, ${day} ${year}`}</Text>
+        <Text c="dimText" size={"sm"}>{`${month}, ${day} ${year}`}</Text>
       </Card>
     </Link>
   );

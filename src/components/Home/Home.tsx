@@ -3,14 +3,7 @@ import { Link } from "react-router";
 import { usePopular } from "../../hooks/data-hooks/usePopular";
 import { useTrending } from "../../hooks/data-hooks/useTrending";
 import { useSearch } from "@/hooks/data-hooks/useSearch";
-import {
-  Container,
-  TextInput,
-  Title,
-  Text,
-  Button,
-  Popover,
-} from "@mantine/core";
+import { Flex, TextInput, Title, Text, Button, Popover } from "@mantine/core";
 import CategoryCarousel from "../CategoryCarousel/CategoryCarousel";
 import PageHeader from "../PageHeader/PageHeader";
 import { useNavigate } from "react-router";
@@ -54,72 +47,71 @@ function Home() {
     return <p>Error, contact site admin.</p>;
   }
 
-  //Made a simple fallabck in case the backdrop image is not available
+  //Fallback image is provided in header component if this is null
   const bgPath = popularData?.results[0]?.backdrop_path ?? null;
 
   return (
     <>
       <PageHeader bgPath={bgPath}>
-        <Container ta={"left"} w={"80%"}>
-          {" "}
-          <Title order={1} c={"#FFF"}>
-            Find Your Flix, Get Your Fix.
-          </Title>
-          <Text c={"#FFF"} fz={"20"} fw={700}>
-            The possibilities are endless. Search our database to build your
-            watchlist.
-          </Text>
-          <Popover
-            width="target"
-            position="bottom"
-            hideDetached={false}
-            opened={open}
-            offset={{ mainAxis: -46, crossAxis: 0 }}
-          >
-            <Popover.Target>
-              <form
-                onFocus={() => setOpen(true)}
-                onBlur={() => setOpen(false)}
-                onSubmit={handleSubmit}
+        <Title order={1} c={"altText"}>
+          Find Your Flix, Get Your Fix.
+        </Title>
+        <Text c={"altText"} fz={"20"} fw={700}>
+          The possibilities are endless. Search our database to build your
+          watchlist.
+        </Text>
+        <Popover
+          width="target"
+          position="bottom"
+          hideDetached={false}
+          opened={open}
+          offset={{ mainAxis: -46, crossAxis: 0 }}
+        >
+          <Popover.Target>
+            <form
+              onFocus={() => setOpen(true)}
+              onBlur={() => setOpen(false)}
+              onSubmit={handleSubmit}
+            >
+              <TextInput
+                mt={5}
+                aria-label="Search movies"
+                value={input}
+                onChange={(e) => setInput(e.currentTarget.value)}
+                placeholder="Search for movies to watch tonight"
+              />
+              <Button
+                mt={10}
+                type="submit"
+                bg="brand"
+                className={classes.searchButton}
+                disabled={!input.trim()}
               >
-                <TextInput
-                  mt={5}
-                  aria-label="Search movies"
-                  value={input}
-                  onChange={(e) => setInput(e.currentTarget.value)}
-                  placeholder="Search for movies to watch tonight"
-                  w="100%"
-                />
-                <Button
-                  mt={10}
-                  type="submit"
-                  bg="#D13900"
-                  className={classes.searchButton}
-                  disabled={!input.trim()}
+                Search
+              </Button>
+            </form>
+          </Popover.Target>
+          {input && (
+            <Popover.Dropdown>
+              {searchData &&
+                searchData.results
+                  .slice(0, 5)
+                  .map((result) => <SearchResultsListItem result={result} />)}
+              {input && (
+                <Link
+                  to={`/category/search?q=${encodeURIComponent(
+                    input.trim()
+                  )}&page=1`}
+                  style={{ textDecoration: "none" }}
                 >
-                  Search
-                </Button>
-              </form>
-            </Popover.Target>
-            {input && (
-              <Popover.Dropdown>
-                {searchData &&
-                  searchData.results
-                    .slice(0, 5)
-                    .map((result) => <SearchResultsListItem result={result} />)}
-                {input && (
-                  <Link
-                    to={`/category/search?q=${encodeURIComponent(
-                      input.trim()
-                    )}&page=1`}
-                  >
+                  <Text c="dimText" ta="center" py={10}>
                     See More
-                  </Link>
-                )}
-              </Popover.Dropdown>
-            )}
-          </Popover>
-        </Container>
+                  </Text>
+                </Link>
+              )}
+            </Popover.Dropdown>
+          )}
+        </Popover>
       </PageHeader>
 
       {popularData && (
