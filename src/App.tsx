@@ -3,6 +3,8 @@ import HeaderMenu from "./components/HeaderMenu/HeaderMenu";
 import Home from "./components/Home/Home";
 import CategoryResultsPage from "./components/CategoryResultsPage/CategoryResultsPage";
 import DetailsPage from "./components/DetailsPage/DetailsPage";
+import SignUpPage from "./components/SignUp/SignUpPage";
+import LoginPage from "./components/LoginPage/LoginPage";
 import Footer from "./components/Footer/Footer";
 import { AppShell, Box } from "@mantine/core";
 import { useHeadroom } from "@mantine/hooks";
@@ -31,6 +33,8 @@ function App() {
               <Route path="/category/:name" element={<CategoryResultsPage />} />
               <Route path="/watchlist" element={<Watchlist />} />
               <Route path="/details/:id" element={<DetailsPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/login" element={<LoginPage />} />
             </Routes>
           </Box>
           <Box mt="auto">

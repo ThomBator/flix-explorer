@@ -14,6 +14,7 @@ function Home() {
   const [input, setInput] = useState("");
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+
   const {
     isPending: popularIsPending,
     error: popularError,
@@ -34,6 +35,7 @@ function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (input.trim()) {
       navigate(`/category/search?q=${encodeURIComponent(input.trim())}&page=1`);
     }

@@ -19,11 +19,16 @@ import classes from "./HeaderMenu.module.css";
 import LogoLight from "../../assets/FlixExplorerLogo.png";
 import LogoDark from "../../assets/FlixExplorerLogo_inverted_keepRed.png";
 import { links } from "../../utilities/links";
+import { useUser, useLogout } from "@/store/userContext";
+import { useNavigate } from "react-router";
 
 export default function HeaderMenu() {
   const [opened, { toggle, close }] = useDisclosure(false);
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme("light");
+  const { user } = useUser();
+  const handleLogout = useLogout();
+  const navigate = useNavigate();
 
   const toggleColorScheme = () => {
     setColorScheme(computedColorScheme === "dark" ? "light" : "dark");
@@ -125,16 +130,22 @@ export default function HeaderMenu() {
             {items}
           </Group>
 
-          <Button
-            size="sm"
-            variant="transparent"
-            onClick={toggleColorScheme}
-            visibleFrom="sm"
-          >
-            {computedColorScheme === "light"
-              ? computedColorScheme + " ☀️"
-              : computedColorScheme + " 🌔"}
-          </Button>
+          <Group gap={5} visibleFrom="sm">
+            <Button onClick={user ? handleLogout : () => navigate("/login")}>
+              {!user ? "Login" : "Logout"}{" "}
+            </Button>
+
+            <Button
+              size="sm"
+              variant="transparent"
+              onClick={toggleColorScheme}
+              visibleFrom="sm"
+            >
+              {computedColorScheme === "light"
+                ? computedColorScheme + " ☀️"
+                : computedColorScheme + " 🌔"}
+            </Button>
+          </Group>
 
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
         </div>
