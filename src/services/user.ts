@@ -3,7 +3,6 @@ const getUsers = () => {
   return users;
 };
 const setUsers = (users) => {
-  console.log("setUser", users);
   localStorage.setItem("users", JSON.stringify(users));
 };
 
@@ -13,7 +12,6 @@ const getCurrentUser = () => {
 };
 
 const setCurrentUser = (userObj) => {
-  console.log("Set Current User", userObj);
   localStorage.setItem("current-user", JSON.stringify(userObj));
 };
 

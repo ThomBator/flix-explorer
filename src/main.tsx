@@ -10,16 +10,19 @@ import { MantineProvider } from "@mantine/core";
 import { theme } from "@/utilities/theme.ts";
 const queryClient = new QueryClient();
 import UserProvider from "./store/userContext.tsx";
+import WatchlistProvider from "./store/watchlistContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <QueryClientProvider client={queryClient}>
-          <MantineProvider theme={theme}>
-            <App />
-          </MantineProvider>
-        </QueryClientProvider>
+        <WatchlistProvider>
+          <QueryClientProvider client={queryClient}>
+            <MantineProvider theme={theme}>
+              <App />
+            </MantineProvider>
+          </QueryClientProvider>
+        </WatchlistProvider>
       </UserProvider>
     </BrowserRouter>
   </StrictMode>

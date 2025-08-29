@@ -1,0 +1,23 @@
+.card {
+  position: relative;
+}
+.watchlistIcon {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  transition: 0.5ms ease-in;
+}
+
+.watchlistIcon:hover {
+  background-color: transparent;
+  transform: scale(1.2);
+}
+
+.ratingWatchlist {
+  width: 100%;
+  background-color: rgba(17, 18, 19, 0.7);
+  position: absolute;
+  left: 0;
+  top: 222px;
+  border-radius: 0px 0px 5px 5px;
+}

@@ -61,6 +61,7 @@ export const getSearch = async (searchTerm: string, page: number = 1) => {
   }
 };
 
+//
 export const getDetails = async (id) => {
   try {
     const response = await instance({
@@ -93,6 +94,43 @@ export const getDetails = async (id) => {
     };
 
     return data;
+  } catch (error) {}
+};
+
+export const getCast = async (id) => {
+  try {
+    const response = await instance({
+      url: `/movie/${id}/credits`,
+      method: "get",
+    });
+
+    return response.data.cast;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getVideo = async (id) => {
+  try {
+    const response = await instance({
+      url: `/movie/${id}/videos`,
+      method: "get",
+    });
+
+    return response.data.results;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getReviews = async (id) => {
+  try {
+    const response = await instance({
+      url: `/movie/${id}/reviews`,
+      method: "get",
+    });
+
+    return response.data;
   } catch (error) {
     console.log(error);
   }

@@ -11,5 +11,5 @@ export const formatYear = (dateString: string) => {
   const dateToFormat = new Date(dateString);
   const year = dateToFormat.getFullYear();
 
-  return `${year}`;
+  return year;
 };

@@ -1,5 +1,5 @@
 import { useParams, useSearchParams } from "react-router";
-import { SimpleGrid, Flex, Pagination, Title } from "@mantine/core";
+import { SimpleGrid, Flex, Pagination, Title, Loader } from "@mantine/core";
 import ContentCard from "../ContentCard/ContentCard";
 import { usePopular } from "@/hooks/data-hooks/usePopular";
 import { useTrending } from "@/hooks/data-hooks/useTrending";
@@ -7,18 +7,15 @@ import { useSearch } from "@/hooks/data-hooks/useSearch";
 
 function CategoryResultsPage() {
   const category = useParams().name;
-
   const [searchParams, setSearchParams] = useSearchParams();
-  const searchPage = searchParams.get("page") ? searchParams.get("page") : 1;
+  const page = searchParams.get("page") ? searchParams.get("page") : 1;
   const searchQuery = searchParams.get("q") ? searchParams.get("q") : "";
   //React Query has a prop that will only fire the hook if the category is enabled
   //Passing a boolean to my custom hook will make sure we only fetch one category at a time
-  const popular = usePopular(+searchPage, category === "popular");
-  const trending = useTrending(+searchPage, category === "trending");
-  const search = useSearch(searchQuery, +searchPage, category === "search");
+  const popular = usePopular(+page, category === "popular");
+  const trending = useTrending(+page, category === "trending");
+  const search = useSearch(searchQuery, +page, category === "search");
   const isSearch = search.data?.results?.length > 0;
-
-  console.log("data", popular);
 
   const { isPending, error, data } =
     category === "popular"
@@ -28,7 +25,11 @@ function CategoryResultsPage() {
       : search;
 
   if (isPending) {
-    return <div>...Loading</div>;
+    return (
+      <Flex align="center" justify="center" mt="10%">
+        <Loader />
+      </Flex>
+    );
   }
   if (error) {
     return <div>Error</div>;
@@ -61,8 +62,13 @@ function CategoryResultsPage() {
 
       <Pagination
         total={data.total_pages}
-        value={+searchPage}
-        onChange={(pgNum) => setSearchParams({ page: pgNum })}
+        value={+page}
+        onChange={(pgNum) => {
+          const pageParams = isSearch
+            ? { page: pgNum, q: searchQuery }
+            : { page: pgNum };
+          setSearchParams(pageParams);
+        }}
         mt="md"
       />
     </Flex>

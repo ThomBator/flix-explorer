@@ -16,13 +16,14 @@ import { useSignUp, useUser } from "@/store/userContext";
 function SignUpPage() {
   const signUpFn = useSignUp();
   const { user } = useUser();
-  console.log("User in signup", user);
+
   const navigate = useNavigate();
 
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
       email: "",
+      firstName: "",
       password: "",
       confirmPassword: "",
     },
@@ -30,6 +31,8 @@ function SignUpPage() {
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
       // will change this to 8 in prod, 4 makes testing easier
+      firstName: (value) =>
+        /^\w+$/.test(value) ? null : "Please enter your first name, no spaces.",
       password: (v) => (v.length >= 4 ? null : "Password must be 4 characters"),
       confirmPassword: (v, values) =>
         v === values.password ? null : "Passwords do not match",
@@ -51,24 +54,37 @@ function SignUpPage() {
           <form onSubmit={form.onSubmit((values) => signUpFn(values))}>
             <TextInput
               withAsterisk
+              label="First name"
+              placeholder="Enter your first name"
+              key={form.key("firstName")}
+              {...form.getInputProps("firstName")}
+              required
+            />
+
+            <TextInput
+              withAsterisk
               label="Email"
               placeholder="your@email.com"
               key={form.key("email")}
               {...form.getInputProps("email")}
+              required
             />
+
             <PasswordInput
               withAsterisk
               label="Password"
               placeholder="Enter a password"
               key={form.key("password")}
               {...form.getInputProps("password")}
+              required
             />
             <PasswordInput
               withAsterisk
-              label="Re-Enter Password"
+              label="Re-enter password"
               placeholder="Re-enter your password"
               key={form.key("confirmPassword")}
               {...form.getInputProps("confirmPassword")}
+              required
             />
             <Group justify="center" mt="md">
               <Button type="submit">Submit</Button>

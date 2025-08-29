@@ -10,11 +10,17 @@ function SearchResultsListItem({ result }) {
 
   const yearStr = formatYear(result.release_date);
 
+  console.log("Search result", result);
+
   return (
     <Link className={classes.link} to={`/details/${result.id}`}>
-      <Flex className={classes.flex} p={10} gap={10} align="flex-end">
-        <Image w={100} src={posterURI} />
-        <Text c="mainText"> {`${result.title} (${yearStr})`}</Text>
+      <Flex className={classes.flex} p={10} gap={10} align="center">
+        <Image w={80} src={posterURI} />
+        <Flex direction="column" justify="center" align="start">
+          <Text c="mainText"> {result.title}</Text>
+          <Text c="mainText">{yearStr}</Text>
+          <Text c="mainText">{result.vote_average.toFixed(2)} ⭐</Text>
+        </Flex>
       </Flex>
     </Link>
   );
