@@ -172,11 +172,18 @@ export default function HeaderMenu() {
           size="sm"
           variant="transparent"
           onClick={toggleColorScheme}
-          pl={12}
+          pl={10}
         >
           {computedColorScheme === "light"
             ? computedColorScheme + "😎"
             : computedColorScheme + "🌚"}
+        </Button>
+        <Button
+          className={classes.mobileLogin}
+          onClick={user ? handleLogout : () => navigate("/login")}
+          ml={10}
+        >
+          {!user ? "Login" : "Logout"}{" "}
         </Button>
       </Drawer>
     </header>

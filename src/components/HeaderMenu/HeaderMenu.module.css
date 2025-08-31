@@ -67,3 +67,7 @@
   text-decoration: none;
   color: var(--mantine-color-text);
 }
+
+.mobileLogin {
+  display: block;
+}
