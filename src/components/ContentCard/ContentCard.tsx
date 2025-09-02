@@ -27,6 +27,7 @@ function ContentCard({ content }) {
   const year = dateToFormat.getFullYear();
   const { items, handleAddWatchlist, handleRemoveWatchlist } = useWatchlist();
   const posterURI = content.poster_path ? BASE_URL + content.poster_path : Logo;
+  console.log("content", content);
 
   const handleClick = (e) => {
     e.preventDefault();

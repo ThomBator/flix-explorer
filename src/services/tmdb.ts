@@ -84,8 +84,6 @@ export const getDetails = async (id) => {
       method: "get",
     });
 
-    console.log("Cresponse", reviewResponse);
-
     const data = {
       ...response.data,
       trailers: videoResponse.data.results,
